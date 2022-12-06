@@ -16,12 +16,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import coil.size.Scale
 import coil.transform.CircleCropTransformation
@@ -37,7 +39,21 @@ class MainActivity : ComponentActivity() {
             JetpackComposeMVVMRetrofitAndRecyclerviewTheme {
 
                 Surface(color = MaterialTheme.colors.background) {
-                    MovieList(movieList = mainViewModel.movieListResponse)
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "都心温泉一覧",
+                            style = MaterialTheme.typography.subtitle1,
+                            color = Color(0xFF03DAC5),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
+                        Spacer(modifier = Modifier.height(15.dp))
+                        MovieList(movieList = mainViewModel.movieListResponse)
+                    }
                     mainViewModel.getMovieList()
                 }
             }

@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -33,14 +32,12 @@ fun MovieItem(movie: Movie, index: Int, selectedIndex: Int, onClick: (Int) -> Un
             .height(110.dp), shape = RoundedCornerShape(8.dp), elevation = 4.dp
     ) {
         Surface(color = backgroundColor) {
-
             Row(
                 Modifier
                     .padding(4.dp)
                     .fillMaxSize()
             ) {
-
-                
+                //写真
                 Image(
                     painter = rememberImagePainter(
                         data = movie.imageUrl,
@@ -52,40 +49,78 @@ fun MovieItem(movie: Movie, index: Int, selectedIndex: Int, onClick: (Int) -> Un
 
                         }
                     ),
-                    contentDescription = movie.desc,
+                    contentDescription = "",
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(0.2f)
+                        .clickable {
+                            //TODO: 温泉サイトへのdeeplinkの設定
+                        }
                 )
-
 
                 Column(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(1.dp)
                         .fillMaxHeight()
                         .weight(0.8f)
                 ) {
+                    //温泉名
                     Text(
                         text = movie.name,
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Bold
                     )
-                    Text(
-                        text = movie.category,
-                        style = MaterialTheme.typography.caption,
+                    //時間
+                    var walk = movie.walk
+                    var time = movie.time
+                    Row(
                         modifier = Modifier
-                            .background(
-                                Color.LightGray
-                            )
-                            .padding(4.dp)
-                    )
-                    Text(
-                        text = movie.desc,
-                        style = MaterialTheme.typography.body1,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                            .padding(8.dp)
+                    ) {
+                        Text(
+                            text = movie.station,
+                            style = MaterialTheme.typography.caption,
+                            modifier = Modifier
+                                .background(Color.LightGray)
+                                .padding(4.dp)
+                        )
+                        Spacer(modifier = Modifier.width(3.dp))
+                        Text(
+                            text = "徒歩${walk}分",
+                            style = MaterialTheme.typography.subtitle1,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "家から${time}分",
+                            style = MaterialTheme.typography.subtitle1,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                    }
+                    //料金
+                    var cost1 = movie.cost1
+                    var cost2 = movie.cost2
+
+                    Row(
+                        modifier = Modifier
+                            .padding(8.dp)
+                    ) {
+                        Text(
+                            text = "平日：${cost1}円",
+                            style = MaterialTheme.typography.subtitle1,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "土日祝：${cost2}円",
+                            style = MaterialTheme.typography.subtitle1,
+                            fontWeight = FontWeight.Bold
+                        )
+
+
+                    }
 
                 }
             }
@@ -99,10 +134,14 @@ fun MovieItem(movie: Movie, index: Int, selectedIndex: Int, onClick: (Int) -> Un
 @Composable
 fun MovieItem() {
     val movie = Movie(
-        "Coco",
-        "https://howtodoandroid.com/images/coco.jpg",
-        "Coco is a 2017 American 3D computer-animated musical fantasy adventure film produced by Pixar",
-        "Latest"
+        id = 1,
+        imageUrl = "https://www.sakura-2005.com/wp-content/uploads/2017/11/facilities_ct05_004.jpg",
+        name = "東京染井温泉",
+        station = "巣鴨駅",
+        walk = 4,
+        time = 41,
+        cost1 = 1705,
+        cost2 = 1925
     )
 
     MovieItem(movie = movie, 0, 0) { i ->
