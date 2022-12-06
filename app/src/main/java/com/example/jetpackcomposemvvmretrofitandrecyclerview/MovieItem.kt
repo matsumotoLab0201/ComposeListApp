@@ -40,6 +40,7 @@ fun MovieItem(movie: Movie, index: Int, selectedIndex: Int, onClick: (Int) -> Un
                     .fillMaxSize()
             ) {
 
+                
                 Image(
                     painter = rememberImagePainter(
                         data = movie.imageUrl,
